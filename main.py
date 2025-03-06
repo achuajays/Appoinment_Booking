@@ -29,7 +29,7 @@ async def init_db():
                 id SERIAL PRIMARY KEY,
                 date TEXT NOT NULL,
                 reason TEXT NOT NULL,
-                patient_id INT NOT NULL
+                patient_id TEXT NOT NULL
             )
         """)
         await conn.close()
@@ -61,7 +61,7 @@ async def webhook(request: Request):
         conn = await asyncpg.connect(DATABASE_URL)
         await conn.execute(
             "INSERT INTO webhook_data (date, reason, patient_id) VALUES ($1, $2, $3)",
-            date, reason, int(patient_id)
+            date, reason, patient_id
         )
         await conn.close()
 
